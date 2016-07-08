@@ -1,6 +1,6 @@
 
-import inspectorselecter
+import inspectorselector
 
-reload(inspectorselecter)
+reload(inspectorselector)
 
-inspectorselecter.run()
+inspectorselector.run()
