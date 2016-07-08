@@ -1,3 +1,6 @@
+** I BROKE SOMETHING, JUST AVOID THIS FOR RIGHT NOW**
+
+
 I wrote this a while ago and decided to put it up here recently.  Its not perfect, or even really finished.  Completely untested. will probably crash trying to access an invalid MObject/MDagPath at some point. I'm working on other things now.
 
 to Explain:
