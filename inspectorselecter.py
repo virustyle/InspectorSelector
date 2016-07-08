@@ -101,7 +101,7 @@ class IsolationWindow(form_class, base_class):
 		self.setObjectName('inspectorselecter')
 
 		self.setFixedSize(WIDTH, HEIGHT)
-		self.setWindowFlags(QtCore.Qt.FramelessWindowHint);
+		#self.setWindowFlags(QtCore.Qt.FramelessWindowHint);
 
 		sel = om.MSelectionList()
 		om.MGlobal.getActiveSelectionList(sel)
@@ -128,13 +128,13 @@ class IsolationWindow(form_class, base_class):
 	#---------------------------------------------------------------
 
 	def closeEvent(self, event):
-		self.removeCallback()
+		#self.removeCallback()
 		self.removeEventFilters()
 
 	#---------------------------------------------------------------
 	
 	def showEvent(self, event):
-		self.registerCallback()
+		#self.registerCallback()
 		self.createEventFilters()
 
 	#---------------------------------------------------------------
