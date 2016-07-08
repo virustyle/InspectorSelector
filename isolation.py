@@ -52,6 +52,7 @@ class Isolation(object):
 
         for pane in panes:
             cmds.isolateSelect(pane, state=True)
+            cmds.isolateSelect(pane, addSelected=True) # Why is this necessary, I dont care
         
         om.MGlobal.setActiveSelectionList(sel)
 
