@@ -258,20 +258,16 @@ class IsolationWindow(form_class, base_class):
 	def on_add(self):
 		sel = om.MSelectionList()
 		om.MGlobal.getActiveSelectionList(sel)
-		if sel.isEmpty():
-			return
-		
-		self._isolate.addMembers(sel)
+		if not sel.isEmpty():
+			self._isolate.addMembers(sel)
 
 	#---------------------------------------------------------------
 
 	def on_subtract(self):
 		sel = om.MSelectionList()
 		om.MGlobal.getActiveSelectionList(sel)
-		if sel.isEmpty():
-			return
-		
-		self._isolate.removeMembers(sel)
+		if not sel.isEmpty():
+			self._isolate.removeMembers(sel)
 
 	#---------------------------------------------------------------
 
@@ -281,7 +277,7 @@ class IsolationWindow(form_class, base_class):
 		
 		if sel.isEmpty():
 			return
-		
+
 		self._isolate.replaceMembers(sel, setDefault=True)
 
 	#---------------------------------------------------------------
