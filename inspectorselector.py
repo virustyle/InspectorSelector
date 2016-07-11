@@ -92,16 +92,19 @@ uiFile = os.path.join( pwd, uiName )
 form_class, base_class = loadUiType(uiFile)
 
 
+
 class IsolationWindow(form_class, base_class):
 	
 	def __init__(self, parent=getMayaWindow()):
 		super(IsolationWindow, self).__init__(parent)      
 
 		self.setupUi(self)
+		self.parent = parent
 		self.setObjectName('inspectorselecter')
 
 		self.setFixedSize(WIDTH, HEIGHT)
-		# self.setWindowFlags(QtCore.Qt.FramelessWindowHint);
+		self.setWindowFlags(QtCore.Qt.FramelessWindowHint);
+		self.setAttribute(QtCore.Qt.WA_TranslucentBackground);
 
 		sel = om.MSelectionList()
 		om.MGlobal.getActiveSelectionList(sel)
@@ -111,7 +114,8 @@ class IsolationWindow(form_class, base_class):
 		self.viewRefreshFilter = ViewRefreshFilter(self)
 
 		self.views, self.viewWidgets = get3dViews()
-		self.viewPort = parent.findChild(QtGui.QWidget, "viewPanes")
+		self.viewPort = self.parent.findChild(QtGui.QWidget, "viewPanes")
+		self.initPosition()
 
 		self.viewBtns = {}
 		self.panelStates = {}
@@ -119,8 +123,6 @@ class IsolationWindow(form_class, base_class):
 
 		self._memoryBtns = self.getMemoryButtons()
 		
-		self.callbackID = None
-
 		self.initConnections()
 		self.initViewBtns()
 		self.refreshViewBtns()
@@ -128,30 +130,28 @@ class IsolationWindow(form_class, base_class):
 	#---------------------------------------------------------------
 
 	def closeEvent(self, event):
-		# self.removeCallback()
 		self._removeEventFilters()
 
 	#---------------------------------------------------------------
 	
 	def showEvent(self, event):
-		# self.registerCallback()
 		self._createEventFilters()
-
+		
 	#---------------------------------------------------------------
 
 	def hideEvent(self, event):
 		self._removeEventFilters()
-
+		
 	#---------------------------------------------------------------
 
-	def registerCallback(self):
-		self.callbackID = om.MEventMessage.addEventCallback("ModelPanelSetFocus", relocateWidget)
-		# self.callbackID = om.MEventMessage.addEventCallback("ActiveViewChanged", relocateWidget)
+	def initPosition(self):
+		viewPort = self.parent.findChild(QtGui.QWidget, "viewPanes")
+		topRight = viewPort.rect().topRight()
+		x = topRight.x() - (self.width() + 1)
+		y = topRight.y() + (self.height() - 23)
 
-	#---------------------------------------------------------------
-
-	def removeCallback(self):
-		om.MMessage.removeCallback(self.callbackID)
+		self.move(x,y)
+		self.raise_()
 
 	#---------------------------------------------------------------
 
@@ -353,9 +353,6 @@ class IsolationWindow(form_class, base_class):
 
 
 
-
-
-
 def run():
 	global isolationWindow
 	try:
@@ -364,32 +361,6 @@ def run():
 	except: pass
 	isolationWindow = IsolationWindow()
 	isolationWindow.show()
-
-
-
-def relocateWidget(*args, **kwargs):
-
-	global isolationWindow
-	if not isolationWindow:
-		return
-
-	xUtil = om.MScriptUtil()
-	xUtil.createFromInt(0)
-	xPtr = xUtil.asIntPtr()
-
-	yUtil = om.MScriptUtil()
-	yUtil.createFromInt(0)
-	yPtr = yUtil.asIntPtr()
-
-	activeView = mui.M3dView.active3dView()
-	activeView.getScreenPosition(xPtr, yPtr)
-
-	x = xUtil.getInt(xPtr) + (activeView.portWidth() - isolationWindow.width())
-	y = yUtil.getInt(yPtr) - 30
-
-	isolationWindow.move(x, y)		
-
-
 
 
 
@@ -406,9 +377,12 @@ class ViewRefreshFilter(QtCore.QObject):
 
 
 	def eventFilter(self, obj, event):
-		
+
 		if event.type() == QtCore.QEvent.Show: # I cant find a better event to use. this gets called at most 4x
 			self.parent.refreshViewBtns()
+
+		elif event.type() == QtCore.QEvent.Resize:
+			self.parent.initPosition()
 
 		return QtCore.QObject.eventFilter(self, obj, event)    
 
