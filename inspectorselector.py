@@ -145,8 +145,8 @@ class IsolationWindow(form_class, base_class):
 	#---------------------------------------------------------------
 
 	def moveToPosition(self):
-		topRight = self.viewPort.mapToGlobal(self.viewPort.rect().topRight())
-		self.move(topRight.x() - (WIDTH + 1), topRight.y() + 11)
+		topRight = self.viewPort.mapToParent(self.viewPort.rect().topRight())
+		self.move(topRight.x() - (WIDTH + 1), topRight.y() + (HEIGHT - 23))
 		self.raise_()
 
 	#---------------------------------------------------------------
@@ -194,7 +194,7 @@ class IsolationWindow(form_class, base_class):
 	def _removeEventFilters(self):
 		for btn in self._memoryBtns:
 			btn.removeEventFilter(self.memoryClickFilter)
-
+		
 		self.viewPort.removeEventFilter(self.viewRefreshFilter)
 
 	#---------------------------------------------------------------

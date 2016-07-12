@@ -31,10 +31,6 @@ QPushButton{
 	font: 8pt &quot;Tahoma&quot;;
 }
 
-QPushButton:pressed{
-	background-color: rgb(74, 105, 129);
-}
-
 QPushButton:checked{
 	background-color: rgb(157, 102, 71);
 }
@@ -45,6 +41,10 @@ QPushButton#isolateBTN:checked{
 
 QPushButton#isolateBTN:pressed{
 	background-color: rgb(80, 80, 80);
+}
+
+QPushButton[pressed=blue]:pressed{
+	background-color: rgb(74, 105, 129);
 }
 
  QFrame{
@@ -142,6 +142,9 @@ QPushButton[state=&quot;clear&quot;]{
          <property name="autoExclusive">
           <bool>false</bool>
          </property>
+         <property name="pressed" stdset="0">
+          <string>blue</string>
+         </property>
         </widget>
        </item>
        <item row="2" column="1">
@@ -167,6 +170,9 @@ QPushButton[state=&quot;clear&quot;]{
          <property name="autoExclusive">
           <bool>false</bool>
          </property>
+         <property name="pressed" stdset="0">
+          <string>blue</string>
+         </property>
         </widget>
        </item>
        <item row="1" column="1">
@@ -191,6 +197,9 @@ QPushButton[state=&quot;clear&quot;]{
          </property>
          <property name="autoExclusive">
           <bool>false</bool>
+         </property>
+         <property name="pressed" stdset="0">
+          <string>blue</string>
          </property>
         </widget>
        </item>
