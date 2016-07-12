@@ -16,7 +16,7 @@
   <property name="styleSheet">
    <string notr="true">
 QWidget{
-background-color: rgb(70, 70, 70, 0);
+background-color: rgb(70, 70, 70);
 color: rgb(188, 188, 188);
 font: 8pt &quot;Helvetica&quot;;
 }
@@ -31,44 +31,29 @@ QPushButton{
 	font: 8pt &quot;Tahoma&quot;;
 }
 
+QPushButton:pressed{
+	background-color: rgb(74, 105, 129);
+}
 
 QPushButton:checked{
 	background-color: rgb(157, 102, 71);
 }
 
-
 QPushButton#isolateBTN:checked{
 	background-color: rgb(138, 74, 61);
 }
 
+QPushButton#isolateBTN:pressed{
+	background-color: rgb(80, 80, 80);
+}
 
  QFrame{
-	background-color: rgb(70, 70, 70, 0);
+	background-color: rgb(70, 70, 70);
 	border-style: solid;
 	border-width:0.0px;
 	border-color: rgb(50, 50, 50);
 	border-radius:0px;
  }
-
-
-QComboBox{
-	color: rgb(45, 45, 45);
-	background-color: rgb(130, 130, 130);
-}
-
-QComboBox QWidget{
-	border-radius:0px;	
-	background-color: rgb(60, 60, 60);
-}
-
-
-
-
-
-
-
-
-
 
 QPushButton[radio=True]:checked{
 	background-color: rgb(140, 93, 69);
@@ -92,7 +77,7 @@ QPushButton[state=&quot;clear&quot;]{
      <number>2</number>
     </property>
     <property name="spacing">
-     <number>2</number>
+     <number>1</number>
     </property>
     <item row="0" column="0">
      <widget class="QFrame" name="frame">
@@ -1338,10 +1323,13 @@ QPushButton[state=&quot;clear&quot;]{
         <number>1</number>
        </property>
        <property name="spacing">
-        <number>2</number>
+        <number>1</number>
        </property>
        <item row="0" column="1">
         <layout class="QVBoxLayout" name="memoryVLayout_2">
+         <property name="spacing">
+          <number>2</number>
+         </property>
          <item>
           <widget class="QPushButton" name="memory1BTN">
            <property name="sizePolicy">

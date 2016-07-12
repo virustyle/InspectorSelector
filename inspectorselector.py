@@ -104,7 +104,7 @@ class IsolationWindow(form_class, base_class):
 
 		self.setFixedSize(WIDTH, HEIGHT)
 		self.setWindowFlags(QtCore.Qt.FramelessWindowHint);
-		self.setAttribute(QtCore.Qt.WA_TranslucentBackground);
+		# self.setAttribute(QtCore.Qt.WA_TranslucentBackground);
 
 		sel = om.MSelectionList()
 		om.MGlobal.getActiveSelectionList(sel)
@@ -115,7 +115,7 @@ class IsolationWindow(form_class, base_class):
 
 		self.views, self.viewWidgets = get3dViews()
 		self.viewPort = self.parent.findChild(QtGui.QWidget, "viewPanes")
-		self.initPosition()
+		self.moveToPosition()
 
 		self.viewBtns = {}
 		self.panelStates = {}
@@ -144,13 +144,9 @@ class IsolationWindow(form_class, base_class):
 		
 	#---------------------------------------------------------------
 
-	def initPosition(self):
-		viewPort = self.parent.findChild(QtGui.QWidget, "viewPanes")
-		topRight = viewPort.rect().topRight()
-		x = topRight.x() - (self.width() + 1)
-		y = topRight.y() + (self.height() - 23)
-
-		self.move(x,y)
+	def moveToPosition(self):
+		topRight = self.viewPort.mapToGlobal(self.viewPort.rect().topRight())
+		self.move(topRight.x() - (WIDTH + 1), topRight.y() + 11)
 		self.raise_()
 
 	#---------------------------------------------------------------
@@ -382,7 +378,7 @@ class ViewRefreshFilter(QtCore.QObject):
 			self.parent.refreshViewBtns()
 
 		elif event.type() == QtCore.QEvent.Resize:
-			self.parent.initPosition()
+			self.parent.moveToPosition()
 
 		return QtCore.QObject.eventFilter(self, obj, event)    
 
