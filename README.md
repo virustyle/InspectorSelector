@@ -12,3 +12,7 @@ for Maya 2016 or newer
 import inspectorselector
 
 inspectorselector.run()
+
+
+![inspectorselector](https://cloud.githubusercontent.com/assets/12991367/17086010/ba56e5f2-519b-11e6-81b7-143412c3694f.png)
+
