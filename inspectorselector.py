@@ -145,8 +145,9 @@ class IsolationWindow(form_class, base_class):
 	#---------------------------------------------------------------
 
 	def moveToPosition(self):
-		topRight = self.viewPort.mapToParent(self.viewPort.rect().topRight())
-		self.move(topRight.x() - (WIDTH + 1), topRight.y() + (HEIGHT - 23))
+
+		topRight = self.viewPort.mapTo(getMayaWindow(), self.viewPort.rect().topRight())
+		self.move(topRight.x() - (WIDTH + 1), topRight.y() + 41) # subtract window border and invisible title bar.
 		self.raise_()
 
 	#---------------------------------------------------------------
@@ -254,23 +255,26 @@ class IsolationWindow(form_class, base_class):
 	def on_add(self):
 		sel = om.MSelectionList()
 		om.MGlobal.getActiveSelectionList(sel)
-		if not sel.isEmpty():
-			self._isolate.addMembers(sel)
+		if sel.isEmpty():
+			return
+
+		self._isolate.addMembers(sel)
 
 	#---------------------------------------------------------------
 
 	def on_subtract(self):
 		sel = om.MSelectionList()
 		om.MGlobal.getActiveSelectionList(sel)
-		if not sel.isEmpty():
-			self._isolate.removeMembers(sel)
+		if sel.isEmpty():
+			return
+		
+		self._isolate.removeMembers(sel)
 
 	#---------------------------------------------------------------
 
 	def on_reload(self):
 		sel = om.MSelectionList()
 		om.MGlobal.getActiveSelectionList(sel)
-		
 		if sel.isEmpty():
 			return
 
