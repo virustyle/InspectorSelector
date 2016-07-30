@@ -146,7 +146,7 @@ class IsolationWindow(form_class, base_class):
 
 	def moveToPosition(self):
 
-		topRight = self.viewPort.mapTo(getMayaWindow(), self.viewPort.rect().topRight())
+		topRight = self.viewPort.mapTo(self.parent, self.viewPort.rect().topRight())
 		self.move(topRight.x() - (WIDTH + 1), topRight.y() + 41) # subtract window border and invisible title bar.
 		self.raise_()
 
